@@ -4,11 +4,14 @@ from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_mail import Mail
 from itsdangerous import URLSafeTimedSerializer
-
+import os
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '87bfb447b21f18a081d337c088e52763'
-app.config["SQLALCHEMY_DATABASE_URI"]='mysql://root:root@localhost/janus'
+app.config["SQLALCHEMY_DATABASE_URI"] = (
+    f"mysql://{os.environ.get('MYSQLUSER')}:{os.environ.get('MYSQLPASSWORD')}"
+    f"@{os.environ.get('MYSQLHOST')}:{os.environ.get('MYSQLPORT')}/{os.environ.get('MYSQLDATABASE')}"
+)
 app.config["SQLALCHEMY_TRACK_MODIFICATION"]= False
 
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
