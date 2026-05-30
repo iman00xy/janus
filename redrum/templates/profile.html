@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}پروفایل — Janus{% endblock %}
+
+{% block content %}
+<div class="page-wrapper">
+    <h1 class="page-title">پروفایل</h1>
+    <div class="page-title-line"></div>
+
+    <div class="profile-header">
+        <div class="profile-avatar">
+            {{ current_user.username[0] | upper }}
+        </div>
+        <div>
+            <p class="profile-name">{{ current_user.username }}</p>
+            <p class="profile-email">{{ current_user.email }}</p>
+            {% if current_user.is_confirmed %}
+                <span class="profile-badge">✓ حساب تأیید شده</span>
+            {% else %}
+                <span class="profile-badge unconfirmed">⚠ حساب تأیید نشده</span>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="info-grid">
+        <div class="info-card">
+            <p class="info-card-label">نام کاربری</p>
+            <p class="info-card-value">{{ current_user.username }}</p>
+        </div>
+        <div class="info-card">
+            <p class="info-card-label">ایمیل</p>
+            <p class="info-card-value">{{ current_user.email or '—' }}</p>
+        </div>
+        <div class="info-card">
+            <p class="info-card-label">شماره موبایل</p>
+            <p class="info-card-value">{{ current_user.mobile_number }}</p>
+        </div>
+        {% if current_user.confirmed_on %}
+        <div class="info-card">
+            <p class="info-card-label">تاریخ تأیید</p>
+            <p class="info-card-value">{{ current_user.confirmed_on.strftime('%Y/%m/%d') }}</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+        <a href="{{ url_for('cart') }}" class="btn btn-outline">مشاهده سبد خرید</a>
+        <a href="{{ url_for('upload') }}" class="btn btn-outline">کارت‌های پستال</a>
+        <a href="{{ url_for('logout') }}" class="btn btn-danger">خروج از حساب</a>
+    </div>
+</div>
+{% endblock %}

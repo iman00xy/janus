@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}تأیید ایمیل — Janus{% endblock %}
+
+{% block content %}
+<div class="auth-page">
+    <div class="auth-card" style="text-align:center;">
+        <div class="auth-logo">
+            <span class="big-j">J</span>
+            <p>ANUS ART SHOP</p>
+        </div>
+
+        <div style="font-size:2.5rem; margin-bottom:1rem;">✉️</div>
+        <h2 class="auth-title" style="text-align:center;">تأیید ایمیل</h2>
+        <div class="auth-divider" style="margin:1rem auto;"></div>
+
+        <p style="color:var(--white-dim); font-size:0.92rem; margin-bottom:2rem;">
+            حساب کاربری شما با موفقیت تأیید شد.<br>
+            اکنون می‌توانید وارد شوید.
+        </p>
+
+        <a href="{{ url_for('Login') }}" class="btn btn-primary btn-full">ورود به حساب</a>
+    </div>
+</div>
+{% endblock %}

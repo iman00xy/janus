@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}ورود — Janus{% endblock %}
+
+{% block content %}
+<div class="auth-page">
+    <div class="auth-card">
+        <div class="auth-logo">
+            <span class="big-j">J</span>
+            <p>ANUS ART SHOP</p>
+        </div>
+
+        <h2 class="auth-title">ورود به حساب</h2>
+        <p class="auth-subtitle">خوشحالیم که برگشتید</p>
+        <div class="auth-divider"></div>
+
+        <form method="POST" action="{{ url_for('Login') }}" novalidate>
+            {{ form.hidden_tag() }}
+
+            <div class="form-group">
+                {{ form.username.label }}
+                {{ form.username(placeholder="نام کاربری") }}
+                {% if form.username.errors %}
+                    {% for e in form.username.errors %}
+                    <p class="form-error">{{ e }}</p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.password.label }}
+                {{ form.password(placeholder="رمز عبور") }}
+                {% if form.password.errors %}
+                    {% for e in form.password.errors %}
+                    <p class="form-error">{{ e }}</p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <div class="checkbox-row">
+                    {{ form.remember() }}
+                    {{ form.remember.label }}
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-full">ورود</button>
+        </form>
+
+        <div class="auth-footer">
+            حساب کاربری ندارید؟ <a href="{{ url_for('register') }}">ثبت‌نام کنید</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}Janus Art Shop — فروشگاه هنری{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <p class="hero-eyebrow">فروشگاه هنری جانوس</p>
+    <h1 class="hero-title">هنر را<br><em>لمس کنید</em></h1>
+    <p class="hero-sub">منحصربه‌فردترین آثار هنری را کشف کنید و تجربه‌ای فراموش‌نشدنی بسازید.</p>
+    <div class="hero-divider"></div>
+</section>
+
+{% if categories %}
+<div class="filter-bar">
+    <button class="filter-btn active" data-category="all" onclick="filterProducts('all', this)">همه</button>
+    {% for cat in categories %}
+        {% if cat[0] %}
+        <button class="filter-btn" data-category="{{ cat[0] }}" onclick="filterProducts('{{ cat[0] }}', this)">{{ cat[0] }}</button>
+        {% endif %}
+    {% endfor %}
+</div>
+{% endif %}
+
+<section class="products-section">
+    <div class="section-header">
+        <h2>محصولات</h2>
+        <div class="section-line"></div>
+    </div>
+
+    <div class="products-grid" id="productsGrid">
+        {% if products %}
+            {% for product in products %}
+            <div class="product-card" data-category="{{ product.category or '' }}">
+                <div class="product-img-wrap">
+                    {% if product.image_url %}
+                        <img src="{{ product.image_url }}" alt="{{ product.product_name }}">
+                    {% else %}
+                        <div class="product-img-placeholder">✦</div>
+                    {% endif %}
+                    {% if product.category %}
+                    <span class="product-category-tag">{{ product.category }}</span>
+                    {% endif %}
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">{{ product.product_name }}</h3>
+                    {% if product.description %}
+                    <p class="product-desc">{{ product.description }}</p>
+                    {% endif %}
+                    <div class="product-footer">
+                        <div class="product-price">
+                            {{ "{:,}".format(product.price | int) }}
+                            <span>تومان</span>
+                        </div>
+                        {% if current_user.is_authenticated %}
+                        <form method="POST" action="{{ url_for('add_to_cart', product_id=product.id) }}" style="display:inline;">
+                            <input type="hidden" name="quantity" value="1">
+                            <button type="submit" class="btn-add-cart">افزودن</button>
+                        </form>
+                        {% else %}
+                        <a href="{{ url_for('Login') }}" class="btn-add-cart" style="text-decoration:none;">افزودن</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="empty-state">
+                <p>در حال حاضر محصولی موجود نیست.</p>
+            </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

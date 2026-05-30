@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}کارت پستال — Janus{% endblock %}
+
+{% block content %}
+<div class="page-wrapper">
+    <h1 class="page-title">کارت پستال</h1>
+    <div class="page-title-line"></div>
+
+    <div class="upload-card">
+        <p style="color:var(--white-dim); font-size:0.9rem; margin-bottom:2rem;">
+            کارت پستال شخصی خود را با متن، تصویر و صدا بسازید. یک QR Code منحصر به فرد برای شما تولید خواهد شد.
+        </p>
+
+        <form method="POST" action="{{ url_for('upload') }}" enctype="multipart/form-data" novalidate>
+
+            <div class="form-group">
+                <label for="text">متن کارت پستال</label>
+                <textarea name="text" id="text" placeholder="پیام خود را بنویسید..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>تصویر</label>
+                <div class="upload-zone" onclick="document.getElementById('image').click()">
+                    <div class="upload-zone-icon">🖼</div>
+                    <p class="upload-zone-text">برای انتخاب تصویر کلیک کنید</p>
+                    <p id="imageName" style="font-size:0.78rem; color:var(--gold); margin-top:0.4rem;"></p>
+                </div>
+                <input type="file" name="image" id="image" accept="image/*"
+                    style="display:none"
+                    onchange="document.getElementById('imageName').textContent = this.files[0]?.name || ''">
+            </div>
+
+            <div class="form-group">
+                <label>فایل صوتی</label>
+                <div class="upload-zone" onclick="document.getElementById('audio').click()">
+                    <div class="upload-zone-icon">🎵</div>
+                    <p class="upload-zone-text">برای انتخاب فایل صوتی کلیک کنید</p>
+                    <p id="audioName" style="font-size:0.78rem; color:var(--gold); margin-top:0.4rem;"></p>
+                </div>
+                <input type="file" name="audio" id="audio" accept="audio/*"
+                    style="display:none"
+                    onchange="document.getElementById('audioName').textContent = this.files[0]?.name || ''">
+            </div>
+
+            <button type="submit" class="btn btn-primary">ساخت کارت پستال و QR Code</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

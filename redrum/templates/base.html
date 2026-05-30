@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Janus Art Shop{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="grain-overlay"></div>
+
+<nav class="navbar">
+    <div class="nav-inner">
+        <a href="{{ url_for('home') }}" class="logo">
+            <span class="logo-j">J</span>ANUS
+        </a>
+        <ul class="nav-links">
+            <li><a href="{{ url_for('home') }}">فروشگاه</a></li>
+            {% if current_user.is_authenticated %}
+                <li><a href="{{ url_for('upload') }}">کارت پستال</a></li>
+                <li><a href="{{ url_for('profile') }}">پروفایل</a></li>
+                <li>
+                    <a href="{{ url_for('cart') }}" class="cart-link">
+                        سبد خرید
+                        <span class="cart-dot"></span>
+                    </a>
+                </li>
+                <li><a href="{{ url_for('logout') }}" class="btn-nav-logout">خروج</a></li>
+            {% else %}
+                <li><a href="{{ url_for('Login') }}">ورود</a></li>
+                <li><a href="{{ url_for('register') }}" class="btn-nav-register">ثبت‌نام</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+
+<main class="main-content">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-container">
+                {% for category, message in messages %}
+                    <div class="flash flash-{{ category }}">
+                        <span>{{ message }}</span>
+                        <button class="flash-close" onclick="this.parentElement.remove()">×</button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+</main>
+
+<footer class="footer">
+    <div class="footer-inner">
+        <div class="footer-logo">
+            <span class="logo-j">J</span>ANUS
+        </div>
+        <p class="footer-tagline">هنر را لمس کنید</p>
+        <div class="footer-divider"></div>
+        <p class="footer-copy">© ۱۴۰۴ جانوس آرت شاپ — تمامی حقوق محفوظ است</p>
+    </div>
+</footer>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
