@@ -255,3 +255,33 @@ def logout():
 @login_required
 def profile():
     return render_template('profile.html')
+
+@app.route('/setup-db-temp-x7k2')
+def setup_db():
+    try:
+        products = [
+            Product(product_name='گردنبند طلایی کلاسیک', quantity=10, price=1250000, description='گردنبند ظریف با آویز شمع طلایی، مناسب برای مهمانی‌های رسمی', category='جواهرات', image_url='https://picsum.photos/seed/necklace/400/400', is_active=True),
+            Product(product_name='کیف دستی هنری', quantity=5, price=3800000, description='کیف چرمی با نقش هندسی انحصاری، دست‌دوز و بادوام', category='کیف و کفش', image_url='https://picsum.photos/seed/handbag/400/400', is_active=True),
+            Product(product_name='عطر اختصاصی جانوس', quantity=15, price=2100000, description='ترکیب عود و وانیل با رایحه‌ای ماندگار', category='عطر', image_url='https://picsum.photos/seed/perfume/400/400', is_active=True),
+            Product(product_name='تابلوی نقاشی مینیمال', quantity=3, price=8500000, description='اثر هنری اصیل روی بوم، امضاشده توسط هنرمند', category='هنر تجسمی', image_url='https://picsum.photos/seed/painting/400/400', is_active=True),
+            Product(product_name='ماگ سرامیکی جانوس', quantity=20, price=480000, description='ماگ دست‌ساز با لوگوی جانوس، مقاوم در برابر حرارت', category='لوازم خانگی', image_url='https://picsum.photos/seed/mug/400/400', is_active=True),
+            Product(product_name='شال هنری بافته‌شده', quantity=8, price=1750000, description='شال ابریشمی با نقش‌های هندسی ایرانی', category='پوشاک', image_url='https://picsum.photos/seed/scarf/400/400', is_active=True),
+            Product(product_name='دستبند طلا و سنگ یشم', quantity=8, price=980000, description='دستبند ظریف طلایی با سنگ یشم طبیعی، دست‌ساز', category='جواهرات', image_url='https://picsum.photos/seed/bracelet/400/400', is_active=True),
+            Product(product_name='گوشواره آویز طلایی', quantity=12, price=750000, description='گوشواره آویز با طرح قطره، مناسب برای استفاده روزانه', category='جواهرات', image_url='https://picsum.photos/seed/earring/400/400', is_active=True),
+            Product(product_name='کیف پول چرم دست‌دوز', quantity=15, price=1200000, description='کیف پول مردانه از چرم طبیعی با جای کارت و اسکناس', category='کیف و کفش', image_url='https://picsum.photos/seed/wallet/400/400', is_active=True),
+            Product(product_name='کوله پشتی هنری', quantity=6, price=2800000, description='کوله چرمی با نقش‌برجسته هنری، مناسب برای استفاده شهری', category='کیف و کفش', image_url='https://picsum.photos/seed/backpack/400/400', is_active=True),
+            Product(product_name='عطر گل رز و عنبر', quantity=10, price=1650000, description='ترکیب گل رز و عنبر با ماندگاری بالا، مناسب برای بانوان', category='عطر', image_url='https://picsum.photos/seed/rose-perfume/400/400', is_active=True),
+            Product(product_name='عطر چوب صندل', quantity=10, price=1900000, description='رایحه گرم و خاکی چوب صندل با نت‌های وانیل', category='عطر', image_url='https://picsum.photos/seed/sandalwood/400/400', is_active=True),
+            Product(product_name='مجسمه برنزی انتزاعی', quantity=4, price=12000000, description='مجسمه دست‌ساز از برنز خالص، اثر هنرمند ایرانی', category='هنر تجسمی', image_url='https://picsum.photos/seed/sculpture/400/400', is_active=True),
+            Product(product_name='چاپ دستی سیلک‌اسکرین', quantity=7, price=3200000, description='پرینت هنری با تکنیک سیلک‌اسکرین، نسخه محدود', category='هنر تجسمی', image_url='https://picsum.photos/seed/silkscreen/400/400', is_active=True),
+            Product(product_name='شمع معطر دست‌ریخته', quantity=20, price=320000, description='شمع سویا با رایحه لاوندر و وانیل، سوخت ۴۰ ساعته', category='لوازم خانگی', image_url='https://picsum.photos/seed/candle/400/400', is_active=True),
+            Product(product_name='بشقاب سرامیکی نقش‌دار', quantity=10, price=580000, description='بشقاب دست‌ساز با نقش هندسی ایرانی', category='لوازم خانگی', image_url='https://picsum.photos/seed/plate/400/400', is_active=True),
+            Product(product_name='کلاه پشمی بافته‌شده', quantity=14, price=620000, description='کلاه گرم زمستانی با بافت سنتی و رنگ‌های طبیعی', category='پوشاک', image_url='https://picsum.photos/seed/wool-hat/400/400', is_active=True),
+            Product(product_name='جوراب هنری طرح‌دار', quantity=30, price=185000, description='جوراب نخی با نقش‌های هنری انحصاری، تولید محدود', category='پوشاک', image_url='https://picsum.photos/seed/art-socks/400/400', is_active=True),
+        ]
+        db.session.bulk_save_objects(products)
+        db.session.commit()
+        return 'محصولات با موفقیت اضافه شدند!'
+    except Exception as e:
+        db.session.rollback()
+        return f'خطا: {str(e)}'
