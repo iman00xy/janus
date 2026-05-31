@@ -6,12 +6,9 @@ from flask_mail import Mail
 from itsdangerous import URLSafeTimedSerializer
 import os
 
-mysql_url = os.environ.get('MYSQL_URL', 'mysql://root:root@localhost/janus')
-mysql_url = mysql_url.replace('mysql://', 'mysql+mysqldb://', 1)
-
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '87bfb447b21f18a081d337c088e52763'
-app.config["SQLALCHEMY_DATABASE_URI"] = mysql_url
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get('DATABASE_URL', 'mysql://root:root@localhost/janus')
 app.config["SQLALCHEMY_TRACK_MODIFICATION"]= False
 
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
