@@ -178,17 +178,10 @@ def register():
             db.session.add(user)
             db.session.commit()
 
-            token = s.dumps(user.email, salt='email-confirm')
-            msg = Message('تأیید حساب کاربری جانوس', sender='noreply@example.com', recipients=[user.email])
-            link = url_for('confirm_email', token=token, _external=True)
-            msg.html = f'''
-            <p>سلام {user.username},</p>
-            <p>از ثبت‌نام شما سپاسگزاریم. لطفاً برای تأیید حساب خود روی دکمه زیر کلیک کنید:</p>
-            <p><a href="{link}" style="padding: 10px; background-color: #c9a84c; color: black; text-decoration: none; border-radius: 4px;">تأیید حساب</a></p>
-            <p>با تشکر،<br>تیم جانوس</p>'''
-            mail.send(msg)
-
-            flash("ایمیل تأییدی برای شما ارسال شد. لطفاً ایمیل خود را بررسی کنید.", "info")
+            user.is_confirmed = True
+            user.confirmed_on = datetime.utcnow()
+            db.session.commit()
+            flash("ثبت‌نام با موفقیت انجام شد!", "success")
             return redirect(url_for('Login'))
 
         except SQLAlchemyError:
